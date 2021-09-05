@@ -2,16 +2,13 @@ from utility_functions import *
 import mkl
 mkl.set_num_threads(1)
 
-n_train_seq = np.array([50, 100])
-# n_train_seq = np.array([50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000])
+n_train_seq = np.array([50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000])
 n_holdout_seq = n_train_seq
 n_train_max = 1000
 n_holdout_max = 1000
 n_test = 1000
-# runs = 50
-# n_jobs = 50
-runs = 5
-n_jobs = 5
+runs = 50
+n_jobs = 50
 
 numiter = 1000; batchsize = 10; long_factor = 1;
 
@@ -35,21 +32,15 @@ data_train = [generate_data_interactive(B_true, n_train_max, p, polykernel_degre
 data_holdout = [generate_data_interactive(B_true, n_holdout_max, p, polykernel_degree = polykernel_degree, noise_half_width = noise_half_width, constant = constant) for run in range(runs)]
 data_test = generate_data_interactive(B_true, n_test, p, polykernel_degree = polykernel_degree, noise_half_width = noise_half_width, constant = constant) 
 
-# lambda_max = 100
-# num_lambda = 10
-# lambda_min_ratio = 1e-3
-# lambda_min = lambda_max*lambda_min_ratio
-# lambdas = np.exp(np.linspace(np.log(lambda_min), np.log(lambda_max), num = num_lambda))
-# lambdas = np.round(lambdas, 2)
-# lambdas = np.concatenate((np.array([0, 0.001, 0.01]), lambdas))
-# gammas = np.array([0.01, 0.1, 0.5, 1, 2])
 lambda_max = 100
-num_lambda = 2
+num_lambda = 10
 lambda_min_ratio = 1e-3
 lambda_min = lambda_max*lambda_min_ratio
 lambdas = np.exp(np.linspace(np.log(lambda_min), np.log(lambda_max), num = num_lambda))
 lambdas = np.round(lambdas, 2)
-gammas = np.array([0.1, 0.5])
+lambdas = np.concatenate((np.array([0, 0.001, 0.01]), lambdas))
+gammas = np.array([0.01, 0.1, 0.5, 1, 2])
+
 
 output = "experiment.txt"
 with open(output, 'w') as f:
